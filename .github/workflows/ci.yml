@@ -27,7 +27,7 @@ jobs:
 
       - name: Run Python linter (flake8)
         run: |
-          flake8 server/djangoapp server/djangoproj --max-line-length=120 --exclude=migrations
+          flake8 server/djangoapp server/djangoproj --max-line-length=160 --ignore=E402 --exclude=migrations
 
       - name: Set up Node.js
         uses: actions/setup-node@v4

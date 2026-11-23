@@ -24,6 +24,8 @@ logger = logging.getLogger(__name__)
 
 # Create a `login_request` view to handle sign in request
 @csrf_exempt
+
+
 def login_user(request):
     # Get username and password from request.POST dictionary
     data = json.loads(request.body)
@@ -69,6 +71,8 @@ def logout_request(request):
     logout(request)
     data = {"userName": ""}
     return JsonResponse(data)
+
+
 def get_dealerships(request, state="All"):
     if state == "All":
         endpoint = "/fetchDealers"
@@ -109,6 +113,8 @@ def get_cars(request):
     return JsonResponse({"CarModels": cars})
 
 @csrf_exempt
+
+
 def add_review(request):
     if not request.user.is_anonymous:
         data = json.loads(request.body)
