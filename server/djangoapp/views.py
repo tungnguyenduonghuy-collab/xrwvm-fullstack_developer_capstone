@@ -15,17 +15,15 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 # from .populate import initiate
 
-
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
-
 
 # Create your views here.
 
 # Create a `login_request` view to handle sign in request
+
+
 @csrf_exempt
-
-
 def login_user(request):
     # Get username and password from request.POST dictionary
     data = json.loads(request.body)
@@ -89,6 +87,7 @@ def get_dealer_details(request, dealer_id):
         return JsonResponse({"status": 200, "dealer": dealership})
     return JsonResponse({"status": 400, "message": "Bad Request"})
 
+
 from .restapis import get_request, post_review
 
 
@@ -97,24 +96,13 @@ def get_dealer_reviews(request, dealer_id):
         endpoint = "/fetchReviews/dealer/" + str(dealer_id)
         reviews = get_request(endpoint)
         return JsonResponse({"status": 200, "reviews": reviews})
-    return JsonResponse({"status": 400, "message": "Bad Request"})
-from .populate import initiate
-from .models import CarMake, CarModel
 
-
-def get_cars(request):
-    count = CarMake.objects.filter().count()
-    if count == 0:
-        initiate()
-    car_models = CarModel.objects.select_related('car_make')
-    cars = []
     for car_model in car_models:
         cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
     return JsonResponse({"CarModels": cars})
 
+
 @csrf_exempt
-
-
 def add_review(request):
     if not request.user.is_anonymous:
         data = json.loads(request.body)
